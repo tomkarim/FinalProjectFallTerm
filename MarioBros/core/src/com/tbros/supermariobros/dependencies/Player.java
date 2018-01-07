@@ -3,27 +3,35 @@ package com.tbros.supermariobros.dependencies;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class Player {
-  private Sprite sprite;
-  private int xcor;
-  private int ycor;
+public class Player extends Sprite {
+  public boolean canJump;
+  public float x, y;
+
 
   public Player () {
-    sprite = new Sprite(new Texture("goompa.png"));
-    xcor = 0;
-    ycor = 0;
+    super(new Texture("mario.png"));
+    x = 0;
+    y = 50;
+    super.setPosition(x, y);
+    canJump = true;
   }
 
-  public Sprite getSprite() {
-    return sprite;
-  }
+  public void update (int keycode) {
+    switch (keycode) {
+      case 19: //Up
+      if (!canJump && y > 65) break;
+      y += 150;
+      canJump = false;
+      break;
+      case 21:
+      x -= 5;
+      break;
+      case 22:
+      x += 5;
+      break;
+    }
 
-  public int getXCor () {
-    return xcor;
-  }
-
-  public int getYCor () {
-    return ycor;
+    System.out.println("(" + x + ", " + y + ")");
   }
 
 }

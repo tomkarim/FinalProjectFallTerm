@@ -3,24 +3,54 @@ package com.tbros.supermariobros.dependencies;
 import com.badlogic.gdx.InputAdapter;
 
 public class InputManager extends InputAdapter {
+  private int key;
+  private boolean keyPressed;
+
+  @Override
   public boolean keyDown (int keycode) {
     switch (keycode) {
       case 19:
-      System.out.println("Up");
+      key = 19;
+      keyPressed = true;
+      //System.out.println("Up");
       break;
       case 20:
-      System.out.println("down");
+      key = 20;
+      keyPressed = true;
+      //System.out.println("down");
       break;
       case 21:
-      System.out.println("left");
+      key = 21;
+      keyPressed = true;
+      //System.out.println("left");
       break;
       case 22:
-      System.out.println("right");
+      key = 22;
+      keyPressed = true;
+      //System.out.println("right");
       break;
     }
-   return false;
+   return true;
  }
+
+@Override
  public boolean keyUp (int keycode) {
+   key = 0;
+   keyPressed = false;
    return false;
  }
+
+ @Override
+ public boolean keyTyped (char character) {
+   return false;
+ }
+
+ public int getKey () {
+   return key;
+ }
+
+ public boolean KeyPressed () {
+   return keyPressed;
+ }
+
 }
