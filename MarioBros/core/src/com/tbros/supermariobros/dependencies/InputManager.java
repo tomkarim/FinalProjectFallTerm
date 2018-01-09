@@ -1,7 +1,14 @@
 package com.tbros.supermariobros.dependencies;
 
-import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputAdapter; //Inputs libGDX's InputAdapter, which we extend inorder to customize what we want to do whenver a user makes an input.
 
+/*
+  InputManager
+
+  All "inputs" (keypresses in particular) are interpretted here.
+  The 3 keys we deal with are the up-arrow, left-arrow, and right-arrow
+
+*/
 public class InputManager extends InputAdapter {
   private int key;
   private boolean keyPressed;

@@ -1,7 +1,7 @@
 package com.tbros.supermariobros.dependencies;
 
-import java.util.Random;
-import com.badlogic.gdx.graphics.Texture;
+import java.util.Random; // Used to randomize the x coordinate.
+import com.badlogic.gdx.graphics.Texture; // Gives us the ability to print the desired image onto the screen.
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.Gdx;
 
@@ -12,8 +12,8 @@ public class Goompa extends Sprite {
   public Goompa () {
     super(new Texture("goompa.png"));
     random = new Random();
-    x = (int)(Gdx.graphics.getWidth() / 2) + random.nextInt(((int) (Gdx.graphics.getWidth() / 2 + 1)));
-    y = 45;
+    x = (int)(Gdx.graphics.getWidth() / 2) + random.nextInt(((int) (Gdx.graphics.getWidth() / 2 + 1))); // Spawn them at a random x-coordinate.
+    y = 45; // Make them appear to be on the stage.
     super.setPosition(x, y);
   }
 }
