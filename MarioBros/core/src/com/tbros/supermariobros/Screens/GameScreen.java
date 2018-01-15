@@ -17,8 +17,10 @@ import com.tbros.supermariobros.MarioBros;
 public class GameScreen implements Screen {
 
     private MarioBros game;
+    //vars for camera view
     private OrthographicCamera mariocam; //can be adjusted to show what view the current game displays in the GameScreen
     private Viewport gameport; //size of the view in the world, width/height is adjustable in GameScreen
+   //vars for tiled
     private TiledMap map; //sets this as the tmx map to be loaded
     private TmxMapLoader loader; //loads tmx map
     private OrthogonalTiledMapRenderer renderer; //renders tmx map
@@ -26,10 +28,10 @@ public class GameScreen implements Screen {
     public GameScreen(MarioBros game){
         this.game = game;
         mariocam = new OrthographicCamera();
-        gameport = new FitViewport(400, 300, mariocam); //maintains aspect ratio
+        gameport = new FitViewport(500, 300, mariocam); //maintains aspect ratio
         loader = new TmxMapLoader();
         map = loader.load("Map.tmx"); //loads specified tmx map found in assets file
-        renderer = new OrthogonalTiledMapRenderer(map); //renders map
+        renderer = new OrthogonalTiledMapRenderer(map); //sets up map to render
         mariocam.position.set(gameport.getWorldWidth() /2, gameport.getWorldHeight()/2, 0); //centers map in the middle of viewport, maximizing use of the screen
 
     }
