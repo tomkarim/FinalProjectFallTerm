@@ -50,14 +50,14 @@ public class MarioBros extends Game {
 
 	}
 
-	@Override
-	public void dispose () {
-		batch.dispose();
-		background.dispose();
-		backgroundMusic.dispose();
+	//@Override
+	//public void dispose () {
+	//	batch.dispose();
+	//	background.dispose();
+	//	backgroundMusic.dispose();
 	//	player.dispose();
 
 		//cleans up everything after the game is over.
 		
-	}
+	//}
 }

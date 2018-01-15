@@ -17,7 +17,6 @@ import com.tbros.supermariobros.MarioBros;
 public class GameScreen implements Screen {
 
     private MarioBros game;
-    Texture texture;
     private OrthographicCamera mariocam; //can be adjusted to show what view the current game displays in the GameScreen
     private Viewport gameport; //size of the view in the world, width/height is adjustable in GameScreen
     private TiledMap map; //sets this as the tmx map to be loaded
@@ -26,11 +25,10 @@ public class GameScreen implements Screen {
 
     public GameScreen(MarioBros game){
         this.game = game;
-        texture = new Texture("background.png"); //sets this image as the new texture that can be viewed when the app is run
         mariocam = new OrthographicCamera();
         gameport = new FitViewport(800, 480, mariocam); //maintains aspect ratio
         loader = new TmxMapLoader();
-        map = loader.load("background.tmx"); //loads specified tmx map found in assets file
+        map = loader.load("Map.tmx"); //loads specified tmx map found in assets file
         renderer = new OrthogonalTiledMapRenderer(map); //renders map
         mariocam.position.set(gameport.getWorldWidth() /2, gameport.getWorldHeight()/2, 0); //centers map in the middle of viewport, maximizing use of the screen
 
@@ -45,13 +43,11 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1,0,0,1); //colors on screen
+        update(delta); //updates screen according to delta time
+        Gdx.gl.glClearColor(1,0,0,1); //colors on screen to black
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); //clears screen
         game.batch.setProjectionMatrix(mariocam.combined); //knows where the camera is currently showing, only renders what is in view
-        game.batch.begin(); //draws texture (spec. in GameScreen) to screen
-        game.batch.draw(texture, 0, 0); //sets coordinates for where the texture is drawn
-        game.batch.end();//closes box
-        update(delta);
+        renderer.render(); //renders map
 
 
     }
@@ -64,7 +60,7 @@ public class GameScreen implements Screen {
 
     public void getInput(float t){
         if(Gdx.input.isTouched()){ //knows if screen is being clicked
-            mariocam.position.x += 100*t;
+            mariocam.position.x += 100*t; //temp, lets us check out the entire world for now
         }
 
     }
