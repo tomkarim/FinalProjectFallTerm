@@ -21,7 +21,7 @@ public class MarioBros extends Game {
 	public Player player; // "Mario". This is the player you get to control.
 	public Music backgroundMusic; // This is where we tell the the program what to play in the background.
 	public InputManager inputWatcher; // InputManager.
-	public Timer timer; // Used to tell the game to account for gravity ever accouple frames. Work in progress.
+	public Timer timer; // Used to tell the game to account for gravity every couple of frames. Work in progress.
 
 	@Override
 	public void create () {
