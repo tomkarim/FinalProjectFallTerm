@@ -26,7 +26,7 @@ public class GameScreen implements Screen {
     public GameScreen(MarioBros game){
         this.game = game;
         mariocam = new OrthographicCamera();
-        gameport = new FitViewport(800, 480, mariocam); //maintains aspect ratio
+        gameport = new FitViewport(400, 300, mariocam); //maintains aspect ratio
         loader = new TmxMapLoader();
         map = loader.load("Map.tmx"); //loads specified tmx map found in assets file
         renderer = new OrthogonalTiledMapRenderer(map); //renders map
