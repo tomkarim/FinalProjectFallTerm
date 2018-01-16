@@ -21,7 +21,7 @@ import com.tbros.supermariobros.MarioBros;
 
 public class GameScreen implements Screen {
 
-    private MarioBros game;
+    MarioBros game;
     //vars for camera view
     private OrthographicCamera mariocam; //can be adjusted to show what view the current game displays in the GameScreen
     private Viewport gameport; //size of the view in the world, width/height is adjustable in GameScreen
@@ -33,18 +33,19 @@ public class GameScreen implements Screen {
     private TmxMapLoader loader; //loads tmx map
     private OrthogonalTiledMapRenderer renderer; //renders tmx map
 
+
     public GameScreen(MarioBros game){
         this.game = game;
 
         mariocam = new OrthographicCamera();
-        gameport = new FitViewport(500, 300, mariocam); //maintains aspect ratio
+        gameport = new FitViewport(MarioBros.wwidth, MarioBros.wheight, mariocam); //maintains aspect ratio
         mariocam.position.set(gameport.getWorldWidth() /2, gameport.getWorldHeight()/2, 0); //centers map in the middle of viewport, maximizing use of the screen
 
         loader = new TmxMapLoader();
         map = loader.load("Map.tmx"); //loads specified tmx map found in assets file
         renderer = new OrthogonalTiledMapRenderer(map); //sets up map to render
 
-        world = new World(new Vector2(0,0), true); //this is for grav, doSleep = true so doesn't calculate physics for objects at rest (no unnecessary calculations)
+        world = new World(new Vector2(0,-10), true); //this is for grav, doSleep = true so doesn't calculate physics for objects at rest (no unnecessary calculations)
         dbugger = new Box2DDebugRenderer();
 
         BodyDef bodydef = new BodyDef(); //need to define body and its contents before creating it
@@ -88,7 +89,6 @@ public class GameScreen implements Screen {
 
 
 
-
     }
 
     public void update(float t){
@@ -128,5 +128,13 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public TiledMap getMap() {
+        return map;
+    }
+
+    public World getWorld() {
+        return world;
     }
 }

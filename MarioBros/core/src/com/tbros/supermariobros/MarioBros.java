@@ -17,11 +17,18 @@ import com.tbros.supermariobros.dependencies.*; //All of the code we wrote is in
 public class MarioBros extends Game {
 	public SpriteBatch batch; // Sprites are held here and displayed.
 	public Texture background; // Planning to implement a 2d tile "world".
+	public Music backgroundMusic; // This is where we tell the the program what to play in the background.
+
+
 	public ArrayList<Goompa> goompas; // Used to store goompa data.
 	public Player player; // "Mario". This is the player you get to control.
-	public Music backgroundMusic; // This is where we tell the the program what to play in the background.
+
 	public InputManager inputWatcher; // InputManager.
 	public Timer timer; // Used to tell the game to account for gravity every couple of frames. Work in progress.
+
+	public static int wwidth = 400;
+	public static int wheight = 208;
+
 
 	@Override
 	public void create () {
