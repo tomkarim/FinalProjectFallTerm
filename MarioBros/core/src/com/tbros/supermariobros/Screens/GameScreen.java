@@ -51,7 +51,7 @@ public class GameScreen implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map); //sets up map to render
         mariocam.position.set(gameport.getWorldWidth() /2, gameport.getWorldHeight()/2, 0); //centers map in the middle of viewport, maximizing use of the screen
 
-        world = new World(new Vector2(0,-10), true); //this is for grav, doSleep = true so doesn't calculate physics for objects at rest (no unnecessary calculations)
+        world = new World(new Vector2(0,-100), true); //this is for grav, doSleep = true so doesn't calculate physics for objects at rest (no unnecessary calculations)
         dbugger = new Box2DDebugRenderer(); //sets up bodies/fixtures to render
         bmaker = new Box2D(this);
 
@@ -93,13 +93,13 @@ public class GameScreen implements Screen {
 
     public void getInput(float deltat){
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){ //knows if UP arrow is pressed
-            mario.mbody.applyLinearImpulse(new Vector2(0,4f), mario.mbody.getWorldCenter(), true); //applies LinearImpulse up, making mario jump
+            mario.mbody.applyLinearImpulse(new Vector2(0,400f), mario.mbody.getWorldCenter(), true); //applies LinearImpulse up, making mario jump
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && mario.mbody.getLinearVelocity().x <= 2){ //knows if RIGHT arrow is pressed
-            mario.mbody.applyLinearImpulse(new Vector2(0.1f,0), mario.mbody.getWorldCenter(), true); //applies force to right
+        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && mario.mbody.getLinearVelocity().x <= 200){ //knows if RIGHT arrow is pressed
+            mario.mbody.applyLinearImpulse(new Vector2(10f,0), mario.mbody.getWorldCenter(), true); //applies force to right
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && mario.mbody.getLinearVelocity().x >= -2){ //knows if LEFT arrow is pressed
-            mario.mbody.applyLinearImpulse(new Vector2(-0.1f,0), mario.mbody.getWorldCenter(), true); //applies force to left
+        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && mario.mbody.getLinearVelocity().x >= -200){ //knows if LEFT arrow is pressed
+            mario.mbody.applyLinearImpulse(new Vector2(-10f,0), mario.mbody.getWorldCenter(), true); //applies force to left
         }
 
     }
