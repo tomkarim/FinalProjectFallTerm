@@ -21,13 +21,13 @@ public class MarioBros extends Game {
 
 
 	public ArrayList<Goompa> goompas; // Used to store goompa data.
-	public Player player; // "Mario". This is the player you get to control.
 
 	public InputManager inputWatcher; // InputManager.
 	public Timer timer; // Used to tell the game to account for gravity every couple of frames. Work in progress.
 
 	public static int wwidth = 400;
 	public static int wheight = 208;
+	public static float scale = 100; //scales pixels accordingly so box2d physics work correctly
 
 
 	@Override
@@ -53,7 +53,7 @@ public class MarioBros extends Game {
 
 	@Override
 	public void render () {
-		super.render(); //calls render in the currently active screen (usually PlayScreen)
+		super.render(); //calls render in the currently active screen (usually GameScreen)
 
 	}
 
