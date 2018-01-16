@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.tbros.supermariobros.Manager.Box2D;
 import com.tbros.supermariobros.MarioBros;
 
 public class GameScreen implements Screen {
@@ -28,6 +29,7 @@ public class GameScreen implements Screen {
     //Box2D
     private World world;
     private Box2DDebugRenderer dbugger; //allows user to physically see bodies in the world
+    private com.tbros.supermariobros.Manager.Box2D bmaker; //uses Box2D class to make the box2d stuff
    //Tiled
     private TiledMap map; //sets this as the tmx map to be loaded
     private TmxMapLoader loader; //loads tmx map
@@ -46,23 +48,8 @@ public class GameScreen implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map); //sets up map to render
 
         world = new World(new Vector2(0,-10), true); //this is for grav, doSleep = true so doesn't calculate physics for objects at rest (no unnecessary calculations)
-        dbugger = new Box2DDebugRenderer();
-
-        BodyDef bodydef = new BodyDef(); //need to define body and its contents before creating it
-        FixtureDef fixdef = new FixtureDef(); //need to define fixture first before you can add it to the body
-        PolygonShape shape  = new PolygonShape(); //shape for fixture
-        Body body; //finally
-
-        for(MapObject obj: map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){ //2nd layer is for the ground
-            Rectangle rec = ((RectangleMapObject)obj).getRectangle(); //typecasts the objects in layer 2 to a RectangleMapObject
-            bodydef.type = BodyDef.BodyType.StaticBody; //static bodies don't move, immune to forces
-            bodydef.position.set(rec.getX() + rec.getWidth() /2, rec.getY() + rec.getHeight() /2);
-            body = world.createBody(bodydef); //adding body to the world
-            shape.setAsBox(rec.getWidth()/2, rec.getHeight()/2); //divided by 2 bc it starts at center
-            fixdef.shape = shape;
-            body.createFixture(fixdef); //adding fixture to the body
-
-        }
+        dbugger = new Box2DDebugRenderer(); //sets up bodies/fixtures to render
+        bmaker = new Box2D(this);
 
 
 
