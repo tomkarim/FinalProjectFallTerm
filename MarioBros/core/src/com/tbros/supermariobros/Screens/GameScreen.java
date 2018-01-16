@@ -24,7 +24,7 @@ import com.tbros.supermariobros.dependencies.Mario;
 
 public class GameScreen implements Screen {
 
-    MarioBros game;
+    private MarioBros game;
     //vars for camera view
     private OrthographicCamera mariocam; //can be adjusted to show what view the current game displays in the GameScreen
     private Viewport gameport; //size of the view in the world, width/height is adjustable in GameScreen
@@ -44,11 +44,11 @@ public class GameScreen implements Screen {
         this.game = game;
 
         mariocam = new OrthographicCamera();
-        gameport = new FitViewport(MarioBros.wwidth/ MarioBros.scale, MarioBros.wheight/MarioBros.scale, mariocam); //maintains aspect ratio
+        gameport = new FitViewport(MarioBros.wwidth/ 1, MarioBros.wheight/1, mariocam); //maintains aspect ratio
 
         loader = new TmxMapLoader();
         map = loader.load("Map.tmx"); //loads specified tmx map found in assets file
-        renderer = new OrthogonalTiledMapRenderer(map, 1/MarioBros.scale); //sets up map to render
+        renderer = new OrthogonalTiledMapRenderer(map); //sets up map to render
         mariocam.position.set(gameport.getWorldWidth() /2, gameport.getWorldHeight()/2, 0); //centers map in the middle of viewport, maximizing use of the screen
 
         world = new World(new Vector2(0,-10), true); //this is for grav, doSleep = true so doesn't calculate physics for objects at rest (no unnecessary calculations)
@@ -83,22 +83,22 @@ public class GameScreen implements Screen {
 
     }
 
-    public void update(float t){
-        getInput(t);
-        //world.step(1/60f, 6, 2); //tells Box2D how often it has to calculate the physics. The higher the velocityIteration and positionIteration, the more precise (gets less efficient)
+    public void update(float deltat){
+        getInput(deltat);
+        world.step(1/60f, 6, 2); //tells Box2D how often it has to calculate the physics. The higher the velocityIteration and positionIteration, the more precise (gets less efficient)
         mariocam.position.x = mario.mbody.getPosition().x;
         mariocam.update();
         renderer.setView(mariocam); //only renders what the camera can see at that instant
     }
 
-    public void getInput(float t){
+    public void getInput(float deltat){
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){ //knows if UP arrow is pressed
             mario.mbody.applyLinearImpulse(new Vector2(0,4f), mario.mbody.getWorldCenter(), true); //applies LinearImpulse up, making mario jump
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){ //knows if RIGHT arrow is pressed
+        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && mario.mbody.getLinearVelocity().x <= 2){ //knows if RIGHT arrow is pressed
             mario.mbody.applyLinearImpulse(new Vector2(0.1f,0), mario.mbody.getWorldCenter(), true); //applies force to right
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){ //knows if LEFT arrow is pressed
+        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && mario.mbody.getLinearVelocity().x >= -2){ //knows if LEFT arrow is pressed
             mario.mbody.applyLinearImpulse(new Vector2(-0.1f,0), mario.mbody.getWorldCenter(), true); //applies force to left
         }
 

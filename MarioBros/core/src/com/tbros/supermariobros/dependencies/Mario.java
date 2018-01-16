@@ -24,13 +24,13 @@ public class Mario extends Sprite {
 
   public void setMbody(){
     BodyDef bodydef = new BodyDef();
-    bodydef.position.set(32/ MarioBros.scale, 32/MarioBros.scale); //setting initial position
+    bodydef.position.set(32, 32); //setting initial position
     bodydef.type = BodyDef.BodyType.DynamicBody; //dynamic bodies are reactive to forces like collisions and gravity
     mbody = world.createBody(bodydef); //creating marios body in the world
 
     FixtureDef fixdef = new FixtureDef();
     CircleShape shape = new CircleShape();
-    shape.setRadius(5/MarioBros.scale); //setting radius of circle to 5 for now
+    shape.setRadius(5); //setting radius of circle to 5 for now
     fixdef.shape = shape; //adding this circle to the fixture
     mbody.createFixture(fixdef); //adding this fixture to the body
 
