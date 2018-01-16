@@ -27,8 +27,6 @@ public class MarioBros extends Game {
 
 	public static int wwidth = 400;
 	public static int wheight = 208;
-	public static float scale = 100; //scales pixels accordingly so box2d physics work correctly
-
 
 	@Override
 	public void create () {
