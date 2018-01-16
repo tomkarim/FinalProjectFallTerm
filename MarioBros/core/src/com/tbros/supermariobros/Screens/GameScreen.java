@@ -2,6 +2,7 @@ package com.tbros.supermariobros.Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tbros.supermariobros.Manager.Box2D;
 import com.tbros.supermariobros.MarioBros;
+import com.tbros.supermariobros.dependencies.Mario;
 
 public class GameScreen implements Screen {
 
@@ -35,21 +37,25 @@ public class GameScreen implements Screen {
     private TmxMapLoader loader; //loads tmx map
     private OrthogonalTiledMapRenderer renderer; //renders tmx map
 
+    private Mario mario;
+
 
     public GameScreen(MarioBros game){
         this.game = game;
 
         mariocam = new OrthographicCamera();
-        gameport = new FitViewport(MarioBros.wwidth, MarioBros.wheight, mariocam); //maintains aspect ratio
-        mariocam.position.set(gameport.getWorldWidth() /2, gameport.getWorldHeight()/2, 0); //centers map in the middle of viewport, maximizing use of the screen
+        gameport = new FitViewport(MarioBros.wwidth/ MarioBros.scale, MarioBros.wheight/MarioBros.scale, mariocam); //maintains aspect ratio
 
         loader = new TmxMapLoader();
         map = loader.load("Map.tmx"); //loads specified tmx map found in assets file
-        renderer = new OrthogonalTiledMapRenderer(map); //sets up map to render
+        renderer = new OrthogonalTiledMapRenderer(map, 1/MarioBros.scale); //sets up map to render
+        mariocam.position.set(gameport.getWorldWidth() /2, gameport.getWorldHeight()/2, 0); //centers map in the middle of viewport, maximizing use of the screen
 
         world = new World(new Vector2(0,-10), true); //this is for grav, doSleep = true so doesn't calculate physics for objects at rest (no unnecessary calculations)
         dbugger = new Box2DDebugRenderer(); //sets up bodies/fixtures to render
         bmaker = new Box2D(this);
+
+        mario = new Mario(world);
 
 
 
@@ -75,18 +81,25 @@ public class GameScreen implements Screen {
 
 
 
-
     }
 
     public void update(float t){
         getInput(t);
+        //world.step(1/60f, 6, 2); //tells Box2D how often it has to calculate the physics. The higher the velocityIteration and positionIteration, the more precise (gets less efficient)
+        mariocam.position.x = mario.mbody.getPosition().x;
         mariocam.update();
         renderer.setView(mariocam); //only renders what the camera can see at that instant
     }
 
     public void getInput(float t){
-        if(Gdx.input.isTouched()){ //knows if screen is being clicked
-            mariocam.position.x += 100*t; //temp, lets us check out the entire world for now
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){ //knows if UP arrow is pressed
+            mario.mbody.applyLinearImpulse(new Vector2(0,4f), mario.mbody.getWorldCenter(), true); //applies LinearImpulse up, making mario jump
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){ //knows if RIGHT arrow is pressed
+            mario.mbody.applyLinearImpulse(new Vector2(0.1f,0), mario.mbody.getWorldCenter(), true); //applies force to right
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){ //knows if LEFT arrow is pressed
+            mario.mbody.applyLinearImpulse(new Vector2(-0.1f,0), mario.mbody.getWorldCenter(), true); //applies force to left
         }
 
     }
