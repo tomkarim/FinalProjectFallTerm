@@ -31,7 +31,7 @@ public class Box2D {
             body.createFixture(fixdef); //adding fixture to the body
         }
 
-        for(MapObject obj : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){ //3nd layer is for the pipes
+        for(MapObject obj : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){ //3rd layer is for the pipes
             Rectangle rec = ((RectangleMapObject)obj).getRectangle(); //typecasts the objects in layer 3 to a RectangleMapObject
             bodydef.type = BodyDef.BodyType.StaticBody; //static bodies don't move, immune to forces
             bodydef.position.set((rec.getX() + rec.getWidth() /2)/1, (rec.getY() + rec.getHeight() /2)/1);
@@ -40,6 +40,18 @@ public class Box2D {
             fixdef.shape = shape;
             body.createFixture(fixdef); //adding fixture to the body
         }
+
+        //temp, will make bricks interactable later
+        for(MapObject obj : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){ //5th layer is for the bricks
+            Rectangle rec = ((RectangleMapObject)obj).getRectangle(); //typecasts the objects in layer 3 to a RectangleMapObject
+            bodydef.type = BodyDef.BodyType.StaticBody; //static bodies don't move, immune to forces
+            bodydef.position.set((rec.getX() + rec.getWidth() /2)/1, (rec.getY() + rec.getHeight() /2)/1);
+            body = world.createBody(bodydef); //adding body to the world
+            shape.setAsBox(rec.getWidth()/2, rec.getHeight()/2); //divided by 2 bc it starts at center
+            fixdef.shape = shape;
+            body.createFixture(fixdef); //adding fixture to the body
+        }
+
 
 
 
