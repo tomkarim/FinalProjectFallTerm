@@ -97,7 +97,7 @@ public class GameScreen implements Screen {
 
     public void getInput(float deltat){
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP) && mario.canJump && mario.mbody.getLinearVelocity().y < 5000){ //knows if UP arrow is pressed
-           mario.mbody.setLinearVelocity(mario.mbody.getLinearVelocity().x, 600);
+           mario.mbody.setLinearVelocity(0, 600);
             // mario.mbody.applyLinearImpulse(new Vector2(0,3000f), mario.mbody.getWorldCenter(), true); //applies LinearImpulse up, making mario jump
             //mario.canJump = false;
         }
