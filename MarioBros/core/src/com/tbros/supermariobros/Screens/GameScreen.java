@@ -88,6 +88,7 @@ public class GameScreen implements Screen {
     }
 
     public void update(float deltat){
+        if (mario.mbody.getPosition().y < 0) System.exit(0);
         getInput(deltat);
         world.step(1/60f, 6, 2); //tells Box2D how often it has to calculate the physics. The higher the velocityIteration and positionIteration, the more precise (gets less efficient)
         mariocam.position.x = mario.mbody.getPosition().x;
