@@ -21,7 +21,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tbros.supermariobros.Manager.Box2D;
 import com.tbros.supermariobros.MarioBros;
-import com.tbros.supermariobros.dependencies.Mario;
+import com.tbros.supermariobros.dependencies.*;
 
 public class GameScreen implements Screen {
 
@@ -41,7 +41,6 @@ public class GameScreen implements Screen {
 
     private Mario mario;
 
-
     public GameScreen(MarioBros game){
         this.game = game;
 
@@ -58,6 +57,8 @@ public class GameScreen implements Screen {
         b2dcrt = new Box2D(this);
         bmaker = new Box2D(this);
         dbugger = new Box2DDebugRenderer(); //sets up bodies/fixtures to render
+
+        world.setContactListener(new Listener());
 
 
     }
@@ -93,8 +94,9 @@ public class GameScreen implements Screen {
     }
 
     public void getInput(float deltat){
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){ //knows if UP arrow is pressed
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP) && mario.canJump){ //knows if UP arrow is pressed
             mario.mbody.applyLinearImpulse(new Vector2(0,4000f), mario.mbody.getWorldCenter(), true); //applies LinearImpulse up, making mario jump
+            //mario.canJump = false;
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && mario.mbody.getLinearVelocity().x <= 500){ //knows if RIGHT arrow is pressed
             mario.mbody.applyLinearImpulse(new Vector2(100f,0), mario.mbody.getWorldCenter(), true); //applies force to right
